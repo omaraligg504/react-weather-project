@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { cn } from '../lib/utils';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { useState } from "react";
+import { cn } from "../lib/utils";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import {
   Select,
   SelectContent,
@@ -10,12 +10,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
+} from "./ui/select";
 
 interface Note {
   id: number;
   text: string;
-  priority: 'important' | 'normal' | 'delayed';
+  priority: "important" | "normal" | "delayed";
 }
 
 const NoteManagerCard = () => {
@@ -27,65 +27,72 @@ const NoteManagerCard = () => {
       const newNote: Note = {
         id: Date.now(),
         text: newNoteText,
-        priority: 'normal'
+        priority: "normal",
       };
       setNotes([...notes, newNote]);
       setNewNoteText("");
     }
   };
 
-  const changePriority = (id: number, newPriority: 'important' | 'normal' | 'delayed') => {
-    setNotes(notes.map(note => 
-      note.id === id ? { ...note, priority: newPriority } : note
-    ));
+  const changePriority = (
+    id: number,
+    newPriority: "important" | "normal" | "delayed"
+  ) => {
+    setNotes(
+      notes.map((note) =>
+        note.id === id ? { ...note, priority: newPriority } : note
+      )
+    );
   };
 
   const deleteNote = (id: number) => {
-    setNotes(notes.filter(note => note.id !== id));
+    setNotes(notes.filter((note) => note.id !== id));
   };
 
   return (
     <Card className="w-full max-w-3xl mx-auto bg-white shadow-md">
       <div className="p-4">
         <h2 className="text-xl font-semibold mb-4 text-blue-600">Tasks</h2>
-        
+
         <div className="flex gap-2 mb-6">
           <Input
             type="text"
             value={newNoteText}
             onChange={(e) => setNewNoteText(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 addNote();
               }
             }}
             placeholder="Add a new task..."
             className="flex-grow"
           />
-          <Button 
-            onClick={addNote}
-            className="bg-blue-600 hover:bg-blue-700"
-          >
+          <Button onClick={addNote} className="bg-blue-600 hover:bg-blue-700">
             Add
           </Button>
         </div>
 
         <div className="space-y-4">
           {notes.map((note) => (
-            <div 
-              key={note.id} 
+            <div
+              key={note.id}
               className={cn(
-                'p-3 rounded border flex items-center justify-between gap-2',
-                note.priority === 'important' && 'bg-red-50 border-red-200',
-                note.priority === 'normal' && 'bg-blue-50 border-blue-200',
-                note.priority === 'delayed' && 'bg-gray-50 border-gray-200'
+                "p-3 rounded border flex items-center justify-between gap-2",
+                note.priority === "important" && "bg-red-50 border-red-200",
+                note.priority === "normal" && "bg-blue-50 border-blue-200",
+                note.priority === "delayed" && "bg-gray-50 border-gray-200"
               )}
             >
               <p className="text-sm flex-grow">{note.text}</p>
               <div className="flex items-center gap-2 shrink-0">
                 <Select
                   value={note.priority}
-                  onValueChange={(value) => changePriority(note.id, value as 'important' | 'normal' | 'delayed')}
+                  onValueChange={(value) =>
+                    changePriority(
+                      note.id,
+                      value as "important" | "normal" | "delayed"
+                    )
+                  }
                 >
                   <SelectTrigger className="w-[120px] h-8">
                     <SelectValue />

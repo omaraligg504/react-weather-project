@@ -36,7 +36,6 @@ const UserDetail = () => {
     },
   });
 
-  // Fetch user posts
   const { data: posts } = useQuery({
     queryKey: ['user-posts', id],
     queryFn: async () => {
@@ -45,13 +44,11 @@ const UserDetail = () => {
     },
   });
 
-  // Fetch user todos
   const { data: todos } = useQuery({
     queryKey: ['user-todos', id],
     queryFn: async () => {
       const response = await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`);
       const data = await response.json() as Promise<Todo[]>;
-      // Initialize completed todos from API
       const completed = (await data).filter(t => t.completed).map(t => t.id);
       setCompletedTodos(new Set(completed));
       return data;
@@ -87,7 +84,7 @@ const UserDetail = () => {
             onClick={() => navigate('/dashboard')}
             className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
           >
-            Back to Dashboard
+            &lt;  Back 
           </button>
         </div>
       </header>
@@ -105,7 +102,6 @@ const UserDetail = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Posts Section */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Posts ({posts.length})</h2>
             <div className="space-y-3 max-h-96 overflow-y-auto">
@@ -118,7 +114,6 @@ const UserDetail = () => {
             </div>
           </div>
 
-          {/* Todos Section */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Todos ({todos.length})</h2>
             <div className="space-y-2 max-h-96 overflow-y-auto">
